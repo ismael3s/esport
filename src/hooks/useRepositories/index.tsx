@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -13,7 +14,6 @@ import { UserProfile, UserReposList } from './types';
 interface IRepositoriesContext {
   onSubmit: (event: React.FormEvent) => void;
   onFavorite: (id: number) => void;
-  onChangePage: (id: number) => void;
   favoritedRepositoriesId: number[];
   userProfile: UserProfile;
   userRepos: UserReposList;
@@ -33,7 +33,6 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     userProfile.login,
   );
   const [favoritedRepositoriesId, setFavoritedRepositoriesId] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     async function fetchUserData(): Promise<void> {
@@ -42,7 +41,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
         setIsLoading(true);
 
         const [userInfo, repositories] = await Promise.all([
-          fetchUserInfos(username), fetchUserRepos(username, currentPage)]);
+          fetchUserInfos(username), fetchUserRepos(username)]);
 
         setUserProfile(userInfo.data);
         setUserRepos({
@@ -63,7 +62,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     if (username.trim().length > 0) {
       fetchUserData();
     }
-  }, [username, currentPage]);
+  }, [username]);
 
   useEffect(() => {
     setFavoritedRepositoriesId(get() ?? []);
@@ -81,7 +80,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     });
   };
 
-  const onFavorite = (id: number): void => {
+  const onFavorite = useCallback((id: number): void => {
     if (favoritedRepositoriesId.includes(id)) {
       setFavoritedRepositoriesId((prevState): number[] => {
         const newArray = prevState.filter((item): boolean => item !== id);
@@ -95,13 +94,10 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
         return [...prevState, id];
       });
     }
-  };
-
-  const onChangePage = (page: number): void => setCurrentPage(page);
+  }, [favoritedRepositoriesId, setCachedRepositories]);
 
   const value: IRepositoriesContext = useMemo(() => ({
     onSubmit,
-    onChangePage,
     userProfile,
     userRepos,
     isLoading,

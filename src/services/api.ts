@@ -10,6 +10,6 @@ const githubApi = axios.create({
 
 const fetchUserInfos = async (username: string): Promise<AxiosResponse<UserProfile>> => githubApi.get(`/users/${username}`);
 
-const fetchUserRepos = async (username: string, page: number): Promise<AxiosResponse<UserRepos[]>> => githubApi.get(`/users/${username}/repos?page=${page}`);
+const fetchUserRepos = async (username: string): Promise<AxiosResponse<UserRepos[]>> => githubApi.get(`/users/${username}/repos`);
 
 export { fetchUserInfos, fetchUserRepos };
