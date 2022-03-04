@@ -106,21 +106,23 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
       ({ id }): boolean => id === repo.id,
     );
 
-    if (favoritedRepositoryIsAlreadyCached) {
-      setFavoritedRepositories((prevState): UserRepos[] => {
-        const newArray = prevState.filter(({ id }): boolean => id !== repo.id);
-
-        setCachedRepositories(newArray);
-
-        return newArray;
-      });
-    } else {
+    if (!favoritedRepositoryIsAlreadyCached) {
       setFavoritedRepositories((prevState): UserRepos[] => {
         setCachedRepositories([...prevState, repo]);
 
         return [...prevState, repo];
       });
+
+      return;
     }
+
+    setFavoritedRepositories((prevState): UserRepos[] => {
+      const newArray = prevState.filter(({ id }): boolean => id !== repo.id);
+
+      setCachedRepositories(newArray);
+
+      return newArray;
+    });
   }, [setCachedRepositories, setFavoritedRepositories, favoritedRepositories]);
 
   const onPageChange = useCallback((count: number): void => {

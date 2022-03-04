@@ -9,7 +9,7 @@ const SearchForm = (): JSX.Element => {
 
   return (
     <Container>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={(event: React.FormEvent): void => onSubmit(event)}>
         <InputText
           name="username"
           Icon={<AiFillGithub size={24} />}
