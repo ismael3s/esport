@@ -35,11 +35,11 @@ const Header: React.FC<HeaderProps> = ({ onShowClick }): JSX.Element => {
             You Favorited counter:
             {favoritedRepositoriesId.length}
             <br />
-            <button type="button" onClick={() => onShowClick()}>
-              Show Repositories
-              <AiOutlineHeart />
-            </button>
           </span>
+          <button type="button" onClick={() => onShowClick()}>
+            Show Repositories
+            <AiOutlineHeart />
+          </button>
         </InformationContainer>
       </UserInformationContainer>
       )}

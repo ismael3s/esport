@@ -43,13 +43,16 @@ const InformationContainer = styled.div`
 
 
     button {
+      
      display: flex;
      align-items: center;
-      padding: 0.3rem;
-      border-radius: 0.5rem;
-      background-color: #4C6FFF;
-      color: white;
-      font-weight: 700;
+     padding: 0.3rem;
+     border-radius: 0.5rem;
+     background-color: #4C6FFF;
+     color: white;
+     font-weight: 700;
+
+      max-width: 160px;
 
       svg {
         margin-left: 0.5rem;
