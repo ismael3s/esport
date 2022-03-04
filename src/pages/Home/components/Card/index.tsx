@@ -52,7 +52,7 @@ const Card: React.FC<CardProps> = ({
           )}
         </FavoriteButton>
       </BadgeContainer>
-      <Description>{description || 'No description'}</Description>
+      <Description>{description || 'No description found.'}</Description>
     </Container>
   );
 };

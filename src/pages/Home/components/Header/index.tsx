@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onShowClick }): JSX.Element => {
             repositorie(s)
           </span>
           <span>
-            You Favorited counter:
+            Favorited counter:
             {favoritedRepositories.length}
             <br />
           </span>
