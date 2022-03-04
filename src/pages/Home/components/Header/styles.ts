@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 const Container = styled.header`
   background-color: #ffffff;
+  box-shadow: -3px 1px 12px -1px rgba(0, 0, 0, 0.61);
+
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.5px;
@@ -13,7 +17,7 @@ const Container = styled.header`
     text-align: center;
   }
 
-  box-shadow: -3px 1px 12px -1px rgba(0, 0, 0, 0.61);
+
 `;
 
 const UserInformationContainer = styled.div`
