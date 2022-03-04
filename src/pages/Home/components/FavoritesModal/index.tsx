@@ -5,11 +5,7 @@ import { useRepositores } from '../../../../hooks/useRepositories';
 import { CloseIcon, Container } from './styles';
 
 const FavoritedRepositoriesCard: React.FC = (): JSX.Element => {
-  const { favoritedRepositoriesId, userRepos } = useRepositores();
-
-  const favoritedRepositories = userRepos?.userRepos?.filter(
-    ({ id }): boolean => favoritedRepositoriesId.includes(id),
-  );
+  const { favoritedRepositories } = useRepositores();
 
   return (
     <div>

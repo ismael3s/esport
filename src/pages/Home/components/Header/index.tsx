@@ -10,7 +10,7 @@ type HeaderProps = {
 }
 
 const Header: React.FC<HeaderProps> = ({ onShowClick }): JSX.Element => {
-  const { userProfile, userRepos, favoritedRepositoriesId } = useRepositores();
+  const { userProfile, userRepos, favoritedRepositories } = useRepositores();
 
   return (
     <Container>
@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({ onShowClick }): JSX.Element => {
           </span>
           <span>
             You Favorited counter:
-            {favoritedRepositoriesId.length}
+            {favoritedRepositories.length}
             <br />
           </span>
           <button type="button" onClick={() => onShowClick()}>

@@ -7,14 +7,17 @@ import React, {
   useState,
 } from 'react';
 import { toast } from 'react-toastify';
-import { fetchUserInfos, fetchUserRepos } from '../../services/api';
+import { fetchUserInfos, fetchUserRepos, perPage } from '../../services/api';
 import { useSessionStorage } from '../useSessionStorage';
-import { UserProfile, UserReposList } from './types';
+import { UserProfile, UserRepos, UserReposList } from './types';
 
 interface IRepositoriesContext {
   onSubmit: (event: React.FormEvent) => void;
-  onFavorite: (id: number) => void;
-  favoritedRepositoriesId: number[];
+  onFavorite: (id: UserRepos) => void;
+  onPageChange: (count: number) => void;
+  favoritedRepositories: UserRepos[];
+  pageCount: number;
+  currentPage: number;
   userProfile: UserProfile;
   userRepos: UserReposList;
   isLoading: boolean;
@@ -29,19 +32,20 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfile>({} as UserProfile);
   const [userRepos, setUserRepos] = useState<UserReposList>({} as UserReposList);
   const [isLoading, setIsLoading] = useState(false);
-  const [, setCachedRepositories] = useSessionStorage<number[]>(
-    userProfile.login,
+  const [, setCachedRepositories] = useSessionStorage<UserRepos[]>(
+    `${userProfile.login}:repos`,
   );
-  const [favoritedRepositoriesId, setFavoritedRepositoriesId] = useState<number[]>([]);
+  const [favoritedRepositories, setFavoritedRepositories] = useState<UserRepos[]>([]);
+  const [pageCount, setPageCount] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     async function fetchUserData(): Promise<void> {
       try {
-        setFavoritedRepositoriesId([]);
         setIsLoading(true);
 
         const [userInfo, repositories] = await Promise.all([
-          fetchUserInfos(username), fetchUserRepos(username)]);
+          fetchUserInfos(username), fetchUserRepos(username, currentPage)]);
 
         setUserProfile(userInfo.data);
         setUserRepos({
@@ -63,14 +67,26 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     if (username.trim().length > 0) {
       fetchUserData();
     }
+  }, [username, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(0);
   }, [username]);
 
   useEffect(() => {
-    const ids = sessionStorage.getItem(userProfile.login);
-    const arrayIds = ids ? JSON.parse(ids) : undefined;
+    const favoritedReposString = sessionStorage.getItem(`${userProfile.login}:repos`);
+    const favoritedRepos = favoritedReposString ? JSON.parse(favoritedReposString) : [];
 
-    setFavoritedRepositoriesId(arrayIds ?? []);
+    setFavoritedRepositories(favoritedRepos);
   }, [userProfile.login]);
+
+  useEffect(() => {
+    setPageCount(Math.ceil(userProfile.public_repos / perPage));
+  }, [userProfile.public_repos]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const onSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -84,31 +100,50 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     });
   };
 
-  const onFavorite = useCallback((id: number): void => {
-    if (favoritedRepositoriesId.includes(id)) {
-      setFavoritedRepositoriesId((prevState): number[] => {
-        const newArray = prevState.filter((item): boolean => item !== id);
+  const onFavorite = useCallback((repo: UserRepos): void => {
+    const favoritedRepositoryIsAlreadyCached = favoritedRepositories.some(
+      ({ id }): boolean => id === repo.id,
+    );
+
+    if (favoritedRepositoryIsAlreadyCached) {
+      setFavoritedRepositories((prevState): UserRepos[] => {
+        const newArray = prevState.filter(({ id }): boolean => id !== repo.id);
 
         setCachedRepositories(newArray);
+
         return newArray;
       });
     } else {
-      setFavoritedRepositoriesId((prevState): number[] => {
-        setCachedRepositories([...prevState, id]);
+      setFavoritedRepositories((prevState): UserRepos[] => {
+        setCachedRepositories([...prevState, repo]);
 
-        return [...prevState, id];
+        return [...prevState, repo];
       });
     }
-  }, [favoritedRepositoriesId, setCachedRepositories]);
+  }, [setCachedRepositories, setFavoritedRepositories, favoritedRepositories]);
 
-  const value: IRepositoriesContext = useMemo(() => ({
-    onSubmit,
-    userProfile,
-    userRepos,
-    isLoading,
-    onFavorite,
-    favoritedRepositoriesId,
-  }), [userRepos, isLoading, userProfile, onFavorite, favoritedRepositoriesId]);
+  const onPageChange = useCallback((count: number): void => {
+    setCurrentPage(count);
+  }, []);
+
+  const value: IRepositoriesContext = useMemo(
+    () => ({
+      onSubmit,
+      onPageChange,
+      onFavorite,
+      userProfile,
+      userRepos,
+      isLoading,
+      currentPage,
+      favoritedRepositories,
+      pageCount,
+    }),
+    [
+      userRepos, isLoading, userProfile, onFavorite,
+      pageCount, onPageChange,
+      currentPage, favoritedRepositories,
+    ],
+  );
 
   return (
     <RepositoriesContext.Provider value={value}>

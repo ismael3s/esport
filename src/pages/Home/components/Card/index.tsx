@@ -22,7 +22,7 @@ const Card: React.FC<CardProps> = ({
   id,
   backgroundColor,
 }): JSX.Element => {
-  const { onFavorite, favoritedRepositoriesId } = useRepositores();
+  const { onFavorite, favoritedRepositories } = useRepositores();
 
   return (
     <Container backgroundColor={backgroundColor}>
@@ -41,8 +41,11 @@ const Card: React.FC<CardProps> = ({
           </Badge>
         </div>
 
-        <FavoriteButton onClick={() => onFavorite(id)}>
-          {favoritedRepositoriesId.includes(id) ? (
+        <FavoriteButton onClick={() => onFavorite({
+          description, forks_count, id, name, stargazers_count,
+        })}
+        >
+          {favoritedRepositories.some((repo): boolean => repo.id === id) ? (
             <AiFillHeart size={24} />
           ) : (
             <AiOutlineHeart size={24} />
