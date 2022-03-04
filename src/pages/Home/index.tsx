@@ -20,11 +20,13 @@ const HomePage: React.FC = (): JSX.Element => {
       <Wrapper>
         <SearchForm />
         {userRepos?.userRepos && <Cards />}
-        <Pagination
-          pageCount={pageCount}
-          onPageChange={onPageChange}
-          currentPage={currentPage}
-        />
+        {userRepos?.userRepos?.length > 0 && (
+          <Pagination
+            pageCount={pageCount}
+            onPageChange={onPageChange}
+            currentPage={currentPage}
+          />
+        )}
       </Wrapper>
       <FavoritesModal isModalOpen={isModalOpen} onClose={onClose} />
       {isLoading && <LoadingScreen />}
