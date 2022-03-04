@@ -29,6 +29,7 @@ const Input = styled.input`
   outline: none;
 
   flex: 1;
+  width: 10px;
 `;
 
 export { Input, Container };

@@ -14,6 +14,8 @@ const SearchForm = (): JSX.Element => {
           name="username"
           Icon={<AiFillGithub size={24} />}
           placeholder="Github Username"
+          autoComplete="off"
+          autoCorrect="off"
         />
 
         <Button text="Search" Icon={<AiOutlineSearch size={20} />} />

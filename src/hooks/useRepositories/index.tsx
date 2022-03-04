@@ -51,6 +51,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
       } catch (error) {
         setUserProfile({} as UserProfile);
         setUserRepos({} as UserReposList);
+
         toast.error("Failer to fetch user's data", {
           position: 'bottom-center',
         });
@@ -67,6 +68,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
   useEffect(() => {
     const ids = sessionStorage.getItem(userProfile.login);
     const arrayIds = ids ? JSON.parse(ids) : undefined;
+
     setFavoritedRepositoriesId(arrayIds ?? []);
   }, [userProfile.login]);
 
@@ -93,6 +95,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     } else {
       setFavoritedRepositoriesId((prevState): number[] => {
         setCachedRepositories([...prevState, id]);
+
         return [...prevState, id];
       });
     }

@@ -6,6 +6,9 @@ const Container = styled.header`
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.5px;
 
+  max-width: 900px;
+  margin: 0 auto;
+
   h1 {
     text-align: center;
   }

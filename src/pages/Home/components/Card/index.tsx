@@ -31,10 +31,12 @@ const Card: React.FC<CardProps> = ({
         <div>
           <Badge variant="secundary">
             Forks -
+            {' '}
             {forks_count}
           </Badge>
           <Badge variant="primary">
             Stars -
+            {' '}
             {stargazers_count}
           </Badge>
         </div>
