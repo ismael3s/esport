@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/esport/static/css/main.43c86f1c.css",
-    "main.js": "/esport/static/js/main.3be2d1ec.js",
+    "main.js": "/esport/static/js/main.3ea63716.js",
     "index.html": "/esport/index.html",
     "main.43c86f1c.css.map": "/esport/static/css/main.43c86f1c.css.map",
-    "main.3be2d1ec.js.map": "/esport/static/js/main.3be2d1ec.js.map"
+    "main.3ea63716.js.map": "/esport/static/js/main.3ea63716.js.map"
   },
   "entrypoints": [
     "static/css/main.43c86f1c.css",
-    "static/js/main.3be2d1ec.js"
+    "static/js/main.3ea63716.js"
   ]
 }
