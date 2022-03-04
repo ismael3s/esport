@@ -29,7 +29,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
   const [userProfile, setUserProfile] = useState<UserProfile>({} as UserProfile);
   const [userRepos, setUserRepos] = useState<UserReposList>({} as UserReposList);
   const [isLoading, setIsLoading] = useState(false);
-  const [, setCachedRepositories, get] = useSessionStorage<number[]>(
+  const [, setCachedRepositories] = useSessionStorage<number[]>(
     userProfile.login,
   );
   const [favoritedRepositoriesId, setFavoritedRepositoriesId] = useState<number[]>([]);
@@ -65,7 +65,9 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
   }, [username]);
 
   useEffect(() => {
-    setFavoritedRepositoriesId(get() ?? []);
+    const ids = sessionStorage.getItem(userProfile.login);
+    const arrayIds = ids ? JSON.parse(ids) : undefined;
+    setFavoritedRepositoriesId(arrayIds ?? []);
   }, [userProfile.login]);
 
   const onSubmit = (event: React.FormEvent): void => {
