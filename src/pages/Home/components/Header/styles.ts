@@ -22,7 +22,7 @@ const Container = styled.header`
 
 const UserInformationContainer = styled.div`
   display: flex;
-  padding: 0.5rem 0;
+  padding: 0.5rem .3rem;
 `;
 
 const Avatar = styled.img`
