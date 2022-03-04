@@ -4,15 +4,21 @@ import ReactPaginate from 'react-paginate';
 
 type PaginationProps = {
   pageCount: number;
+  currentPage: number;
   onPageChange: (count: number) => void;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ pageCount, onPageChange }): JSX.Element => {
+const Pagination: React.FC<PaginationProps> = ({
+  pageCount,
+  onPageChange,
+  currentPage,
+}): JSX.Element => {
   const handlePageChange = ({ selected }: { selected: number}): void => onPageChange(selected);
 
   return (
     <ReactPaginate
       pageCount={pageCount}
+      forcePage={currentPage}
       breakLabel="..."
       onPageChange={handlePageChange}
       nextLabel={<AiOutlineRight />}

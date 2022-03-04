@@ -78,6 +78,7 @@ const RepositoriesContextProvider: React.FC = ({ children }): JSX.Element => {
     const favoritedRepos = favoritedReposString ? JSON.parse(favoritedReposString) : [];
 
     setFavoritedRepositories(favoritedRepos);
+    setCurrentPage(0);
   }, [userProfile.login]);
 
   useEffect(() => {

@@ -8,7 +8,7 @@ import { Wrapper, Container } from './styles';
 
 const HomePage: React.FC = (): JSX.Element => {
   const {
-    userRepos, isLoading, pageCount, onPageChange,
+    userRepos, isLoading, pageCount, onPageChange, currentPage,
   } = useRepositores();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,7 +20,11 @@ const HomePage: React.FC = (): JSX.Element => {
       <Wrapper>
         <SearchForm />
         {userRepos?.userRepos && <Cards />}
-        <Pagination pageCount={pageCount} onPageChange={onPageChange} />
+        <Pagination
+          pageCount={pageCount}
+          onPageChange={onPageChange}
+          currentPage={currentPage}
+        />
       </Wrapper>
       <FavoritesModal isModalOpen={isModalOpen} onClose={onClose} />
       {isLoading && <LoadingScreen />}
