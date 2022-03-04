@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/esport/static/css/main.43c86f1c.css",
+    "main.js": "/esport/static/js/main.4b90d970.js",
+    "index.html": "/esport/index.html",
+    "main.43c86f1c.css.map": "/esport/static/css/main.43c86f1c.css.map",
+    "main.4b90d970.js.map": "/esport/static/js/main.4b90d970.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.43c86f1c.css",
+    "static/js/main.4b90d970.js"
+  ]
+}
