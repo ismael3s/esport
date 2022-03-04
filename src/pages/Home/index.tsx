@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LoadingScreen, Pagination } from '../../components';
+import { LoadingScreen } from '../../components';
 import { useRepositores } from '../../hooks/useRepositories';
 import {
   Cards, FavoritesModal, Header, SearchForm,
@@ -18,7 +18,6 @@ const HomePage: React.FC = (): JSX.Element => {
       {userRepos?.userRepos && <Cards />}
       <FavoritesModal isModalOpen={isModalOpen} onClose={onClose} />
       {isLoading && <LoadingScreen />}
-      <Pagination />
     </>
   );
 };

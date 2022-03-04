@@ -50,10 +50,49 @@ button {
 .pagination {
     display: flex;
     justify-content: center;
-    background: red;
+    background: #ffffff;
+    font-family: "Inter", sans-serif;
 
     li {
         list-style: none;
+    }
+
+    .item {
+        color: white;
+        cursor: pointer;
+        background: #4C6FFF;
+
+        display: grid;
+        place-content: center;
+
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+
+        transition: filter 0.2s;
+
+        &:hover {
+            filter: brightness(90%);
+        }
+    }
+
+    .item-buttons {
+        background: #EDF2F7;
+        cursor: pointer;
+        border-radius: .50rem;
+        padding: .5rem;
+        display: grid;
+        place-content: center;
+        margin: 0 auto;
+        transition: filter 0.2s;
+
+        &:hover {
+            filter: brightness(90%);
+        }
+    }
+
+    .item-active {
+        opacity: 0.5;
     }
 }
 `;
