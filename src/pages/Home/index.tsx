@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LoadingScreen } from '../../components';
+import { LoadingScreen, Pagination } from '../../components';
 import { useRepositores } from '../../hooks/useRepositories';
 import {
   Cards, FavoritesModal, Header, SearchForm,
@@ -7,7 +7,9 @@ import {
 import { Wrapper, Container } from './styles';
 
 const HomePage: React.FC = (): JSX.Element => {
-  const { userRepos, isLoading } = useRepositores();
+  const {
+    userRepos, isLoading, pageCount, onPageChange,
+  } = useRepositores();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onClose = (): void => setIsModalOpen((prevState) => !prevState);
@@ -18,6 +20,7 @@ const HomePage: React.FC = (): JSX.Element => {
       <Wrapper>
         <SearchForm />
         {userRepos?.userRepos && <Cards />}
+        <Pagination pageCount={pageCount} onPageChange={onPageChange} />
       </Wrapper>
       <FavoritesModal isModalOpen={isModalOpen} onClose={onClose} />
       {isLoading && <LoadingScreen />}
