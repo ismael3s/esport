@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ onShowClick }): JSX.Element => {
     <Container>
       <h1>Git Repositories</h1>
 
-      {userRepos.totalCount && (
+      {userRepos.totalCount > 0 && (
       <UserInformationContainer>
         <div>
           <Avatar src={userProfile.avatar_url} />
